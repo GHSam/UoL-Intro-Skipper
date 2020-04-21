@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>UoL Intro Skipper options</title>
+
+  <style>
+    body { font: 110%/1.5 sans-serif; padding: .5em; }
+    label { display: block; width: max-content; margin-bottom: 1em }
+    label:last-of-type { margin-bottom: 0 }
+    #time {
+      display: inline-block;
+      width: 6ex;
+      font: inherit;
+      border: none;
+      border-bottom: 1px solid #aaa;
+      text-align: right;
+    }
+    #enabled { transform: scale(1.75); }
+  </style>
+</head>
+<body>
+
+<label>
+  Skip the first
+  <input type="number" id="time">
+  seconds
+</label>
+
+<label>
+  <input type="checkbox" id="enabled"> Enable
+</label>
+
+<script src="popup.js"></script>
+</body>
+</html>
+
