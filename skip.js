@@ -1,3 +1,4 @@
+const lectureUrlRegex = /^https:\/\/www\.coursera\.org\/learn\/uol-[^\/]+\/lecture\//;
 let skipSeconds = 9;
 let enabled = true;
 
@@ -34,7 +35,9 @@ function skipIntro() {
   const container = document.getElementsByClassName(
     "video-main-player-container"
   )[0];
-  if (!container) {
+
+  // Only run if has video and is on a lecture URL
+  if (!container || !lectureUrlRegex.test(window.location)) {
     setIcon("icon-inactive");
     return;
   }
