@@ -1,0 +1,10 @@
+{
+	"name": "UoL Video Intro Skipper",
+	"version": "1.0.5",
+	"description": "Skips the intro to UoL videos on Coursera",
+	"manifest_version": 2,
+	"content_scripts": [{
+		"js": ["skip.js"],
+		"matches": ["https://www.coursera.org/learn/uol-*"]
+	}]
+}
