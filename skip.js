@@ -5,9 +5,13 @@ let enabled = true;
  * Sets the extensions toolbar icon
  */
 function setIcon(value) {
-  chrome.runtime.sendMessage({
-    iconPath: `icons/${value}.png`,
-  });
+  // If extension is reloaded or updated it will cause
+  // Extension context invalidated exception
+  try {
+    chrome.runtime.sendMessage({
+      iconPath: `icons/${value}.png`,
+    });
+  } catch {}
 }
 
 /**
