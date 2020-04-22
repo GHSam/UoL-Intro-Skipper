@@ -39,7 +39,7 @@ function skipIntroHandler() {
  * Finds the video element and skips the first 9 seconds
  */
 function skipIntro() {
-  // Only run if has video and is on a lecture URL
+  // Only run if has a video and is on a lecture URL
   if (!containers[0] || !lectureUrlRegex.test(window.location)) {
     setIcon("icon-inactive");
     return;
@@ -51,11 +51,19 @@ function skipIntro() {
 
     // Add events or call the handler if events have already been called
     if (video.readyState < 3) {
-      // loadedmetadata seems to be the current event to use but doesn't
-      // always work, might be Coursera adjusting it sometimes?
-      // Using canplay seems to fix the issue.
-      video.addEventListener("loadedmetadata", skipIntroHandler, { once: true });
+      // loadedmetadata seems to be the correct event to use but doesn't
+      // always work, looks like Coursera adjusting the time back sometimes?
+      // Using canplay and canplaythrough seem to mostly fix the issue.
+      video.addEventListener("loadedmetadata", skipIntroHandler, {
+        once: true,
+      });
       video.addEventListener("canplay", skipIntroHandler, { once: true });
+      video.addEventListener("canplaythrough", skipIntroHandler, {
+        once: true,
+      });
+      // Coursera seems to sometimes change the time back so also check on
+      // first play that has skipped intro
+      video.addEventListener("play", skipIntroHandler, { once: true });
     } else {
       skipIntroHandler.call(video);
     }
@@ -100,13 +108,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
 });
 
 // Load current options
-chrome.storage.sync.get(
-  {
-    skipSeconds: 9,
-    enabled: true,
-  },
-  (data) => {
-    skipSeconds = data.skipSeconds;
-    setEnable(data.enabled);
-  }
-);
+chrome.storage.sync.get({ skipSeconds: 9, enabled: true }, (data) => {
+  skipSeconds = data.skipSeconds;
+  setEnable(data.enabled);
+});

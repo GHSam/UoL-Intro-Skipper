@@ -1,6 +1,6 @@
 {
   "name": "UoL Video Intro Skipper",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Skips the intro to UoL videos on Coursera",
   "manifest_version": 2,
   "browser_action": {
