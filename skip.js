@@ -96,19 +96,17 @@ function setEnable(value) {
 
 // Update settings based on changes from options
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === "sync") {
-    if (changes.enabled) {
-      setEnable(changes.enabled.newValue);
-    }
+  if (changes.enabled) {
+    setEnable(changes.enabled.newValue);
+  }
 
-    if (changes.skipSeconds) {
-      skipSeconds = changes.skipSeconds.newValue;
-    }
+  if (changes.skipSeconds) {
+    skipSeconds = changes.skipSeconds.newValue;
   }
 });
 
 // Load current options
-chrome.storage.sync.get({ skipSeconds: 9, enabled: true }, (data) => {
+storageGet({ skipSeconds: 9, enabled: true }, (data) => {
   skipSeconds = data.skipSeconds;
   setEnable(data.enabled);
 });
